@@ -171,13 +171,7 @@ const questionSchema: Schema = new mongoose.Schema(
     },
     questionDescription: {
       type: String,
-<<<<<<< HEAD
-      required: true,
       trim: true,
-      unique: true,
-=======
-      trim: true,
->>>>>>> ca21aa9cc07a9326c398d3a484bf813d5c35a045
     },
     questionType: {
       type: String,
