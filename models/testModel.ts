@@ -7,6 +7,14 @@ interface ITest extends Document {
   valid_upto: string;
   marks: number;
   questions: mongoose.Types.ObjectId[];
+  custom_questions: mongoose.Types.ObjectId[];
+  attempted_students: {
+    student: mongoose.Types.ObjectId;
+    attempted_at: Date;
+    evaluated_by?: mongoose.Types.ObjectId;
+    score?: number;
+    is_evaluated: boolean;
+  }[];
 }
 
 const testSchema: Schema = new Schema(
@@ -39,6 +47,30 @@ const testSchema: Schema = new Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Question",
         required: [true, "Required Field"],
+      },
+    ],
+    attempted_students: [
+      {
+        student: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Student",
+          required: true,
+        },
+        attempted_at: {
+          type: Date,
+          default: Date.now,
+        },
+        evaluated_by: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Teacher",
+        },
+        score: {
+          type: Number,
+        },
+        is_evaluated: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
   },

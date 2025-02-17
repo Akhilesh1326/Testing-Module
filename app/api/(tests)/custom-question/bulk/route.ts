@@ -1,25 +1,18 @@
-import { TestModel } from "@/models/testModel";
+import { CustomQuestion } from "@/models/customQuestionsModel";
 import { handleApiError } from "@/utils/api-error";
 import { connectDb } from "@/utils/db";
 import { NextResponse } from "next/server";
 
 /**
  * @swagger
- * /api/get-tests/{testId}:
+ * /api/custom-question/bulk:
  *   get:
  *     tags:
  *       - Tests
- *     summary: Get a test by ID
- *     parameters:
- *       - in: path
- *         name: testId
- *         required: true
- *         schema:
- *           type: string
- *         description: The test ID
+ *     summary: Get all custom questions
  *     responses:
  *       201:
- *         description: Successful fetch
+ *         description: Success
  *         content:
  *           application/json:
  *             schema:
@@ -27,21 +20,24 @@ import { NextResponse } from "next/server";
  *               properties:
  *                 message:
  *                   type: string
- *                 test:
- *                   type: object
+ *                 questions:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/CustomQuestion'
+ *       500:
+ *         description: Server error
  */
 
-export async function GET({ params }: { params: { testId: string } }) {
+export async function GET() {
   await connectDb();
 
   try {
-    const testId = await params.testId;
-    const test = await TestModel.findById(testId);
+    const questions = await CustomQuestion.find();
 
     return NextResponse.json(
       {
-        message: "Successfull fetch",
-        test,
+        message: "Success",
+        questions,
       },
       {
         status: 201,

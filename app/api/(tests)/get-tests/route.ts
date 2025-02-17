@@ -1,7 +1,7 @@
 import { TestModel } from "@/models/testModel";
 import { handleApiError } from "@/utils/api-error";
 import { connectDb } from "@/utils/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 /**
  * @swagger
